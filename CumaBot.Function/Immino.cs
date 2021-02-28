@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace CumaBot.Function
@@ -20,8 +21,11 @@ namespace CumaBot.Function
 
             _client.Log += Log;
 
-            var token = "ODEyMzE1OTM5NTA4OTc3NjY0.YC--LA.0TddcTf2EamPSBi-FmbjyVpybzQ";
-
+            IConfigurationRoot config = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .Build();
+            string token = config["DISCORD_BOT_TOKEN"];
+            
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
 
