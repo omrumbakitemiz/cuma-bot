@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using CumaBot.Function.Utils;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.Azure.WebJobs;
@@ -19,13 +20,13 @@ namespace CumaBot.Function
 
             _client = new DiscordSocketClient();
 
-            _client.Log += Log;
+            _client.Log += DiscordUtils.HandleLog;
 
             IConfigurationRoot config = new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .Build();
             string token = config["DISCORD_BOT_TOKEN"];
-            
+
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
 
@@ -38,36 +39,21 @@ namespace CumaBot.Function
             };
         }
 
-
-        [FunctionName("Immino")]
+        [FunctionName("CallToCuma")]
         public static async Task RunAsync([TimerTrigger("0 0 8 * * Fri")] TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
 
             _client = new DiscordSocketClient();
 
-            _client.Log += Log;
+            _client.Log += DiscordUtils.HandleLog;
 
             var token = "ODEyMzE1OTM5NTA4OTc3NjY0.YC--LA.0TddcTf2EamPSBi-FmbjyVpybzQ";
 
             await _client.LoginAsync(TokenType.Bot, token);
             await _client.StartAsync();
 
-            _client.Ready += () => ClientOnReady(log);
-        }
-
-        private static async Task ClientOnReady(ILogger logger)
-        {
-            SocketGuild socketGuild = _client.GetGuild(764931336191868939);
-            SocketTextChannel socketTextChannel = socketGuild.GetTextChannel(804687744890699796);
-            await socketTextChannel.SendMessageAsync("https://www.youtube.com/watch?v=QDKMfyRcm7o");
-            logger.LogInformation("Message Sent!");
-        }
-
-        private static Task Log(LogMessage msg)
-        {
-            Console.WriteLine(msg.ToString());
-            return Task.CompletedTask;
+            _client.Ready += () => DiscordUtils.ClientOnReady(log, _client);
         }
     }
 }
