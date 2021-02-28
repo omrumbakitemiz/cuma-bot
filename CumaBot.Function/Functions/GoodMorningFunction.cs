@@ -15,7 +15,7 @@ namespace CumaBot.Function.Functions
         private static readonly string Token = DiscordUtils.GetDiscordBotToken();
 
         [FunctionName("GoodMorning")]
-        public static async Task SaAs([TimerTrigger("*/15 * * * * *")] TimerInfo myTimer, ILogger logger)
+        public static async Task SaAs([TimerTrigger("0 0 7 * * 0")] TimerInfo myTimer, ILogger logger)
         {
             logger.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
 
