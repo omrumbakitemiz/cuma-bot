@@ -1,0 +1,10 @@
+﻿{
+    "IsEncrypted": false,
+    "Values": {
+        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+        "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+        "DISCORD_BOT_TOKEN": "",
+        "KS_TECH_SERVER_ID": "",
+        "GENERAL_CHANNEL_ID": ""
+    }
+}
