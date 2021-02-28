@@ -12,7 +12,7 @@ namespace CumaBot.Function
         private static DiscordSocketClient _client;
 
         [FunctionName("GoodMorning")]
-        public static async Task SaAs([TimerTrigger("0 0 */6 * * *")] TimerInfo myTimer, ILogger log)
+        public static async Task SaAs([TimerTrigger("0 0 */1 * * *")] TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.UtcNow}");
 
@@ -29,7 +29,7 @@ namespace CumaBot.Function
             {
                 SocketGuild socketGuild = _client.GetGuild(764931336191868939);
                 SocketTextChannel socketTextChannel = socketGuild.GetTextChannel(804687744890699796);
-                await socketTextChannel.SendMessageAsync($"Sa As #{DateTime.Now.Hour - DateTime.Now.Minute}");
+                await socketTextChannel.SendMessageAsync($"Sa As # {DateTime.Now.Hour} - {DateTime.Now.Minute}");
                 log.LogInformation("Sa As Message Sent!");
             };
         }
